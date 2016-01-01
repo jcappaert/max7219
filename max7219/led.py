@@ -36,7 +36,7 @@ class device(object):
     """
     NUM_DIGITS = 8
 
-    def __init__(self, cascaded=1, spi_bus=0, spi_device=0):
+    def __init__(self, cascaded=2, spi_bus=0, spi_device=0):
         """
         Constructor: `cascaded` should be the number of cascaded MAX7219
         devices that are connected.
@@ -250,7 +250,7 @@ class sevensegment(device):
 
         # Go through each digit in the formatted string,
         # updating the buffer accordingly
-        for char in strValue:
+        for char in reversed(strValue):
 
             if position < constants.MAX7219_REG_DIGIT0:
                 self.clear(deviceId)
@@ -259,7 +259,7 @@ class sevensegment(device):
             if char == '.':
                 continue
 
-            dp = (decimalPlaces > 0 and position == decimalPlaces + 1)
+            dp = (decimalPlaces > 0 and (constants.MAX7219_REG_DIGIT7 - position) == decimalPlaces)
             self.letter(deviceId, position, char, dot=dp, redraw=False)
             position -= 1
 
