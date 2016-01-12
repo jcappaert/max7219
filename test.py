@@ -23,12 +23,12 @@ def write_large_number(largenumber, spidevice):
 		print str_d2
 		num_d2 = int(str_d2)
 		print num_d2
-		device.write_number(deviceId=0, zeroPad=True, value=num_d1)
-		device.write_number(deviceId=1, value=num_d2)
+		device.write_number(deviceId=1, zeroPad=True, value=num_d1)
+		device.write_number(deviceId=0, value=num_d2)
 	elif num_len > (MAX_NUM_DIGITS_D1 + MAX_NUM_DIGITS_D2):
 		print "Number too large for display"
 	else:
-		device.write_number(deviceId=0, value=largenumber)
+		device.write_number(deviceId=1, value=largenumber)
 
 
 # example
@@ -36,7 +36,7 @@ i = 9950
 while 1:
 
 	write_large_number(i, 0)
-	write_large_number(2*i, 1)
+	write_large_number(i**2, 1)
 	i += 111
 	sleep(0.05)
 
